@@ -1,0 +1,14 @@
+flags: {}
+packages:
+- '.'
+- location:
+    git: git@github.com:konn/haskell-src-exts-qq.git
+    commit: cf7b17e07a338e16a729c8bdd6575583ae932246
+  extra-dep: true
+- location:
+    git: git@github.com:konn/hint-forked.git
+    commit: d3f2df6cb78e3f8c0a5adb5ce3951a63f99419f3
+  extra-dep: true
+extra-deps:
+- th-traced-0.0.1.0
+resolver: lts-3.1
