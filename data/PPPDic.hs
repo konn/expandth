@@ -9,13 +9,12 @@ import qualified Language.Haskell.TH           as TH
 import           Language.Haskell.TH.Instances ()
 import           Language.Haskell.TH.Lift
 
-data PPPDic = PPPDic{expDic ::
-                     Map HSE.Exp
-                       [([TH.Dec], TH.Exp)],
-                     typeDic :: Map HSE.Exp [([TH.Dec], TH.Type)],
-                     decDic :: Map HSE.Exp [([TH.Dec], [TH.Dec])]
-                     }
-            deriving (Data.Typeable.Typeable, Show)
+data PPPDic =
+  PPPDic { expDic  :: Map HSE.Exp [([TH.Dec], TH.Exp)]
+         , typeDic :: Map HSE.Exp [([TH.Dec], TH.Type)]
+         , decDic  :: Map HSE.Exp [([TH.Dec], [TH.Dec])]
+         }
+  deriving (Data.Typeable.Typeable, Show)
 
 empty :: PPPDic
 empty = PPPDic M.empty M.empty M.empty
