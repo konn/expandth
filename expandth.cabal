@@ -44,14 +44,14 @@ executable expandth
   other-extensions:    ExtendedDefaultRules, OverloadedStrings
   build-depends:       base >=4 && <5
                      , expandth
-                     , filepath >= 1.4.0.0
-                     , ghc-paths >= 0.1.0.9
+                     , filepath >= 1.4
+                     , ghc-paths >= 0.1
                      , haskell-src-exts >=1.16
                      , hint
                      , mtl
                      , shelly
                      , template-haskell >=2.9
-                     , temporary >= 1.2.0.3
+                     , temporary >= 1.2
                      , text
   hs-source-dirs:      app
   default-language:    Haskell2010
