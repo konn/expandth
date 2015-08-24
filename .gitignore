@@ -53,5 +53,7 @@ tramp
 # cask packages
 .cask/
 
+# misc
 /tmp
 /expandth
+/expandth-ghc
