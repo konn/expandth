@@ -65,8 +65,10 @@ executable expandth-ghc
                      , filepath >= 1.4
                      , ghc-paths >= 0.1
                      , haskell-src-exts >=1.16
-                     , optparse-declarative >= 0.3
+                     , haskell-src-exts-qq >= 0.6.1
                      , mtl
+                     , optparse-declarative >= 0.3
+                     , random >= 1.1
                      , shelly
                      , template-haskell >=2.9
                      , temporary >= 1.2
