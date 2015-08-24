@@ -132,6 +132,15 @@ instance LiftHSE RuleVar
 instance LiftHSE TypeEqn
 instance LiftHSE Promoted
 instance LiftHSE Bool
+instance LiftHSE Module
+instance LiftHSE WarningText
+instance LiftHSE ModulePragma
+instance LiftHSE Tool
+instance LiftHSE ImportDecl
+instance LiftHSE ExportSpec
+instance LiftHSE ImportSpec
+instance LiftHSE Namespace
+instance LiftHSE CName
 
 deriveLift ''HSE.Exp
 deriveLift ''Boxed
@@ -187,3 +196,12 @@ deriveLift ''BangType
 deriveLift ''RuleVar
 deriveLift ''TypeEqn
 deriveLift ''Promoted
+deriveLift ''Module
+deriveLift ''WarningText
+deriveLift ''ModulePragma
+deriveLift ''Tool
+deriveLift ''ImportDecl
+deriveLift ''ExportSpec
+deriveLift ''ImportSpec
+deriveLift ''Namespace
+deriveLift ''CName
