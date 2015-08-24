@@ -13,7 +13,7 @@ import           Control.Monad.RWS               (RWS, ask, evalRWS, gets)
 import           Control.Monad.RWS               (modify, tell)
 import           Data.Generics                   (Typeable, everywhere,
                                                   everywhere')
-import           Data.Generics                   (everywhereM', extM, extT, mkM)
+import           Data.Generics                   (everywhereM, extM, extT, mkM)
 import           Data.Generics                   (mkT)
 import           Data.List                       (nub, (\\))
 import           Data.Map                        (Map)
@@ -84,7 +84,7 @@ rewriteDec d@(SpliceDecl _loc e) = do
       exts <- ask
       tell $ fromMaybe [d] ((++) <$> toHSEDecs exts tops <*> toHSEDecs exts ds)
 rewriteDec d =
-  tell . (:[]) =<< everywhereM' (mkM rewriteExp `extM` rewriteType) d
+  tell . (:[]) =<< everywhereM (mkM rewriteExp `extM` rewriteType) d
 
 rewriteExp :: Exp -> Rewriter Exp
 rewriteExp e0@(SpliceExp (toSpliceE -> e)) = do
