@@ -11,4 +11,5 @@ packages:
   extra-dep: true
 extra-deps:
 - th-traced-0.0.1.0
+- optparse-declarative-0.3.0
 resolver: lts-3.1
