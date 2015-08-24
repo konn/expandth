@@ -3,8 +3,8 @@
 
 name:                expandth
 version:             0.1.0.0
--- synopsis:            
--- description:         
+synopsis:            Expanding Template Haskell macros
+description:         Libraries and utilities to expand Template Haskell splices.
 license:             BSD3
 license-file:        LICENSE
 author:              Hiromi ISHII
@@ -12,33 +12,46 @@ maintainer:          konn.jinro_at_gmail.com
 -- copyright:           
 category:            Development
 build-type:          Simple
-extra-source-files:  data/PPPDic.hs
+--extra-source-files:  
 cabal-version:       >=1.10
+
+library
+  exposed-modules:     Language.Haskell.TH.Expand
+  other-modules:       LiftHSE
+                       ASTUtil
+                       Translate
+  other-extensions:    DeriveDataTypeable
+                     , QuasiQuotes
+                     , StandaloneDeriving
+                     , TemplateHaskell
+  build-depends:       base >=4 && <5
+                     , containers >=0.5
+                     , filepath >= 1.4.0.0
+                     , haskell-src-exts >=1.16
+                     , th-orphans >= 0.12
+                     , haskell-src-exts-qq >=0.6
+                     , mtl >= 2.2
+                     , syb >=0.4
+                     , template-haskell >=2.9
+                     , th-lift >= 0.7.2
+                     , th-traced >= 0.0.1.0
+  hs-source-dirs:      lib
+  default-language:    Haskell2010
 
 executable expandth
   main-is:             Main.hs
-  other-modules:       Orphans
-                       Interpreter
-                       THUtil
-                       Translate
-  other-extensions:    DeriveDataTypeable, QuasiQuotes, StandaloneDeriving, TemplateHaskell
-  build-depends:       aeson
-                     , base >=4 && <5
-                     , containers >=0.5
+  other-modules:       Interpreter
+  other-extensions:    ExtendedDefaultRules, OverloadedStrings
+  build-depends:       base >=4 && <5
+                     , expandth
                      , filepath >= 1.4.0.0
                      , ghc-paths >= 0.1.0.9
                      , haskell-src-exts >=1.16
-                     , th-orphans
-                     , haskell-src-exts-qq >=0.6
                      , hint
                      , mtl
                      , shelly
-                     , syb >=0.4
-                     , system-filepath
                      , template-haskell >=2.9
                      , temporary >= 1.2.0.3
                      , text
-                     , th-lift >= 0.7.2
-                     , th-traced >= 0.0.1.0
-  -- hs-source-dirs:      .
+  hs-source-dirs:      app
   default-language:    Haskell2010

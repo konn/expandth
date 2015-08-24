@@ -3,10 +3,11 @@
 {-# LANGUAGE OverloadedStrings, QuasiQuotes, StandaloneDeriving        #-}
 {-# LANGUAGE TemplateHaskell, TypeOperators, ViewPatterns              #-}
 {-# OPTIONS_GHC -fno-warn-orphans -fwarn-unused-imports -fwarn-unused-binds #-}
-module Orphans (LiftHSE(..)) where
+module LiftHSE (LiftHSE(..)) where
 import           GHC.Generics
 import           Language.Haskell.Exts
-import qualified Language.Haskell.Exts as HSE
+import qualified Language.Haskell.Exts    as HSE
+import           Language.Haskell.TH.Lift (deriveLift)
 
 deriving instance Generic Type
 
@@ -131,3 +132,58 @@ instance LiftHSE RuleVar
 instance LiftHSE TypeEqn
 instance LiftHSE Promoted
 instance LiftHSE Bool
+
+deriveLift ''HSE.Exp
+deriveLift ''Boxed
+deriveLift ''SrcLoc
+deriveLift ''Binds
+deriveLift ''Bracket
+deriveLift ''Alt
+deriveLift ''IPBind
+deriveLift ''Decl
+deriveLift ''FieldUpdate
+deriveLift ''GuardedRhs
+deriveLift ''Literal
+deriveLift ''IPName
+deriveLift ''QOp
+deriveLift ''Activation
+deriveLift ''QualStmt
+deriveLift ''Annotation
+deriveLift ''Stmt
+deriveLift ''QName
+deriveLift ''Splice
+deriveLift ''Assoc
+deriveLift ''XAttr
+deriveLift ''Asst
+deriveLift ''BooleanFormula
+deriveLift ''Pat
+deriveLift ''CallConv
+deriveLift ''ModuleName
+deriveLift ''ClassDecl
+deriveLift ''SpecialCon
+deriveLift ''PXAttr
+deriveLift ''DataOrNew
+deriveLift ''PatField
+deriveLift ''FunDep
+deriveLift ''RPat
+deriveLift ''GadtDecl
+deriveLift ''Sign
+deriveLift ''InstDecl
+deriveLift ''Kind
+deriveLift ''XName
+deriveLift ''Match
+deriveLift ''TyVarBind
+deriveLift ''RPatOp
+deriveLift ''Op
+deriveLift ''QualConDecl
+deriveLift ''Rhs
+deriveLift ''Overlap
+deriveLift ''Type
+deriveLift ''Name
+deriveLift ''Rule
+deriveLift ''ConDecl
+deriveLift ''Safety
+deriveLift ''BangType
+deriveLift ''RuleVar
+deriveLift ''TypeEqn
+deriveLift ''Promoted
