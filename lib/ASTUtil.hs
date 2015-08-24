@@ -5,9 +5,13 @@
 {-# OPTIONS_GHC -fwarn-unused-imports -fwarn-unused-binds #-}
 module ASTUtil (addDecls, addImports, addLanguagePragmas,
                 extractExts, getModules, getQualified) where
+import           Data.Char                       (isAlpha)
 import           Data.Data                       (Data)
 import           Data.Generics                   (mkQ)
 import           Data.Generics                   (everything)
+import           Data.Generics                   (extQ)
+import           Data.Text                       (breakOnEnd)
+import qualified Data.Text                       as T
 import           Language.Haskell.Exts           (Module (..))
 import           Language.Haskell.Exts           (ImportDecl)
 import           Language.Haskell.Exts           (Decl)
@@ -20,6 +24,7 @@ import           Language.Haskell.Exts           (parseExtension)
 import           Language.Haskell.Exts.Extension (Extension)
 import           Language.Haskell.Exts.SrcLoc    (noLoc)
 import qualified Language.Haskell.TH.Syntax      as TH
+
 
 addDecls :: [Decl] -> Module -> Module
 addDecls ds' (Module l n ps mw mex is ds) = Module l n ps mw mex is (ds ++ ds')
@@ -39,8 +44,12 @@ getModules0 :: TH.NameFlavour -> [String]
 getModules0 (TH.NameG _ _ (TH.ModName mn)) = [mn]
 getModules0 _ = []
 
+getModules1 (TH.Name (TH.OccName n) _)
+  | '.' `elem` n && any isAlpha n = [T.unpack $ T.init $ fst $ breakOnEnd "." $ T.pack n]
+getModules1 _ = []
+
 getModules :: Data a => a -> [String]
-getModules = everything (++) (mkQ [] getModules0)
+getModules = everything (++) (mkQ [] getModules0 `extQ` getModules1)
 
 
 getQualified :: Module -> [String]

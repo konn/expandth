@@ -64,9 +64,9 @@ expandTH edic m@(Module l n ps mw mex is ds) =
   let exts = extractExts m
       (_, ds') = evalRWS (mapM_ rewriteDec ds) exts edic
       p' = Module l n ps mw mex is ds'
-      quals = nub $ concatMap (getModules . snd) (M.toList $ expDic  edic)
-                 ++ concatMap (getModules . snd) (M.toList $ typeDic edic)
-                 ++ concatMap (getModules . snd) (M.toList $ decDic  edic)
+      quals = nub $ concatMap getModules (M.toList $ expDic  edic)
+                 ++ concatMap getModules (M.toList $ typeDic edic)
+                 ++ concatMap getModules (M.toList $ decDic  edic)
       existing = getQualified m
       missing = [ ImportDecl noLoc (ModuleName l) True False False Nothing Nothing Nothing
                 | l <- quals \\ existing, ModuleName l /= n]
