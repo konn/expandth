@@ -7,6 +7,7 @@ module LiftHSE (LiftHSE(..)) where
 import           GHC.Generics
 import           Language.Haskell.Exts
 import qualified Language.Haskell.Exts    as HSE
+import           Language.Haskell.Exts.QQ (hs)
 import           Language.Haskell.TH.Lift (deriveLift)
 
 deriving instance Generic Type
@@ -76,7 +77,8 @@ instance LiftHSE Rational where
   liftHSE = Lit . Frac
 
 instance LiftHSE a => LiftHSE (Maybe a)
-instance (LiftHSE a, LiftHSE b) => LiftHSE (a, b)
+instance (LiftHSE a, LiftHSE b) => LiftHSE (a, b) where
+  liftHSE (a, b) = [hs|($(liftHSE a), $(liftHSE b))|]
 instance LiftHSE HSE.Exp
 instance LiftHSE Boxed
 instance LiftHSE SrcLoc
