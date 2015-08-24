@@ -11,8 +11,9 @@ import Translate
 import           Control.Arrow                   (second)
 import           Control.Monad.RWS               (RWS, ask, evalRWS, gets)
 import           Control.Monad.RWS               (modify, tell)
-import           Data.Generics                   (Typeable, everywhere)
-import           Data.Generics                   (everywhereM, extM, extT, mkM)
+import           Data.Generics                   (Typeable, everywhere,
+                                                  everywhere')
+import           Data.Generics                   (everywhereM', extM, extT, mkM)
 import           Data.Generics                   (mkT)
 import           Data.List                       (nub, (\\))
 import           Data.Map                        (Map)
@@ -51,8 +52,8 @@ type Rewriter a = RWS [Extension] [Decl] ExpandTHDic a
 
 traceTHSplices :: Module -> Module
 traceTHSplices =
-  addTH . everywhere (mkT spliceExp `extT` spliceType
-                                    `extT` wrapSpliceDecl)
+  addTH . everywhere' (mkT spliceExp `extT` spliceType
+                                     `extT` wrapSpliceDecl)
 
 
 empty :: ExpandTHDic
@@ -83,7 +84,7 @@ rewriteDec d@(SpliceDecl _loc e) = do
       exts <- ask
       tell $ fromMaybe [d] ((++) <$> toHSEDecs exts tops <*> toHSEDecs exts ds)
 rewriteDec d =
-  tell . (:[]) =<< everywhereM (mkM rewriteExp `extM` rewriteType) d
+  tell . (:[]) =<< everywhereM' (mkM rewriteExp `extM` rewriteType) d
 
 rewriteExp :: Exp -> Rewriter Exp
 rewriteExp e0@(SpliceExp (toSpliceE -> e)) = do
@@ -179,6 +180,7 @@ addTH =
                       , "Language.Haskell.Exts.Syntax"
                       , "Language.Haskell.Exts"
                       , "Language.Haskell.Exts.SrcLoc"
+                      , "Language.Haskell.Exts.Annotated.Syntax"
                       , "Data.Typeable"
                       , "Data.Map"
                       , "Language.Haskell.TH.Expand"
