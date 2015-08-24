@@ -28,7 +28,7 @@ import           System.Random                (randomIO)
 main :: IO ()
 main = Opt.run_ doMain
 
-mkWrite out = [hs|Language.Haskell.TH.runIO . writeFile $(liftHSE out)|]
+mkWrite out = [hs|Language.Haskell.TH.runIO . System.IO.writeFile $(liftHSE out)|]
 
 finalize out m = [hs|
   do let write = $(mkWrite out)
@@ -61,7 +61,7 @@ doMain ghcCmd opts moutc target = liftIO $ do
       let Module loc n ps mws mes is ds = traceTHSplices m
           is' = map (\n -> ImportDecl noLoc (ModuleName n) True False False Nothing Nothing Nothing)
                 ["Language.Haskell.Exts", "GHC.Base", "GHC.Types", "Language.Haskell.TH"
-                ,"Language.Haskell.Exts.Annotated.Syntax"]
+                ,"Language.Haskell.Exts.Annotated.Syntax", "System.IO"]
           tmpout = dir </> ("M" ++ (show (abs nonce + 1 :: Int)) ++ ".hs" :: String)
           addFin = [hs|do
             Language.Haskell.TH.Syntax.addModFinalizer $(finalize (T.unpack $ toTextIgnore tmpout) m)
