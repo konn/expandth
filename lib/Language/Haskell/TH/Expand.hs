@@ -68,8 +68,8 @@ expandTH edic m@(Module l n ps mw mex is ds) =
                  ++ concatMap (getModules . snd) (M.toList $ typeDic edic)
                  ++ concatMap (getModules . snd) (M.toList $ decDic  edic)
       existing = getQualified m
-      missing = [ ImportDecl noLoc (ModuleName n) True False False Nothing Nothing Nothing
-                | n <- quals \\ existing]
+      missing = [ ImportDecl noLoc (ModuleName l) True False False Nothing Nothing Nothing
+                | l <- quals \\ existing, ModuleName l /= n]
   in addImports missing p'
 
 rewriteDec :: Decl -> Rewriter ()
